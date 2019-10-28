@@ -1,0 +1,15 @@
+server:
+  port: 8761   # 开启多个端口， port: 8661.  zuul已经默认开启了负载均衡。
+eureka:
+  instance:
+    ip-address: 127.0.0.1
+    prefer-ip-address: true     #将自己的ip地址注册到Eureka服务中
+    instance-id: ${spring.application.name}###${server.port}    #指定实例id
+  client:
+    service-url:    # 使用账号密码注册到eureka中
+      defaultZone: http://chenxihua:123456@localhost:8760/eureka/
+spring:
+  application:
+    name: producer
+swagger:
+  base-package: com.lingshi.producer.controller

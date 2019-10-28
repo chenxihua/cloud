@@ -1,0 +1,39 @@
+
+server:
+  port: 8762
+eureka:
+  instance:
+    ip-address: 127.0.0.1
+    prefer-ip-address: true     #将自己的ip地址注册到Eureka服务中
+    instance-id: ${spring.application.name}###${server.port}    #指定实例id
+  client:
+    service-url:
+      defaultZone: http://chenxihua:123456@localhost:8760/eureka/
+spring:
+  application:
+    name: consume
+
+
+# 消费者引入 Hystrix 实现服务调用失败时,服务熔断
+# 高版本的spring-cloud-openfeign 请求分为两层, 先ribbon 控制, 后 hystrix 控制
+# ribbon 请求处理的超时时间:
+ribbon:
+  ReadTimeout: 5000
+  ConnectionTimeout: 5000
+
+# 设置服务熔断超时时间[默认为1s]  hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds=10000
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+
+# 开启Hystrix 以支持服务熔断[高版本默认false关闭], 如果设置为false, 则请求超时交给ribbon控制
+# 开启hystrix 断路器
+feign:
+  hystrix:
+    enabled: true
+swagger:
+  base-package: com.lingshi.consume.controller

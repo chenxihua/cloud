@@ -1,0 +1,35 @@
+server:
+  port: 9999
+eureka:
+  instance:
+    ip-address: 127.0.0.1
+    prefer-ip-address: true     #将自己的ip地址注册到Eureka服务中
+    instance-id: ${spring.application.name}###${server.port}    #指定实例id
+  client:
+    service-url:
+      defaultZone: http://chenxihua:123456@localhost:8760/eureka/
+spring:
+  application:
+    name: zuul
+jwt:
+  header: Authorization     # http请求头所需要的字段
+  secret: mySecret          # jwt 密钥
+  expiration: 604800        # 7天 单位:秒
+  auth-path: auth           # 认证请求的路径
+  md5-key: randomKey        # md5 加密混淆key
+zuul:                # 第二种配置路由的方式   这种为produce 微服务就会被映射到 /produce-server/** 路径上。
+  routes:
+    producer: /produce-server/**
+    consume: /consum-server/**
+  ignored-services: '*'   # 忽略所有微服务，只留zuul代理所有微服务的路由
+#                      第一种配置路由的方式
+#zuul:
+#  ignored-services: '*'
+#  routes:                        #定义服务转发规则
+#    pro-produce:                 #pro-produce这个名字是任意写的
+#      path: /produce-server/**   #匹配produce-server的请求, 并将请求转发到producer服务
+#      serviceid: producer        #服务名称， 这里也可以使用url地址： #url: http://127.0.0.1:8761  真正的微服务地址
+#    con-consume:
+#      path: /consum-server/**
+#      serviceid: consume
+
