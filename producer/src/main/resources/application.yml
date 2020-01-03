@@ -8,6 +8,8 @@ eureka:
   client:
     service-url:    # 使用账号密码注册到eureka中
       defaultZone: http://chenxihua:123456@localhost:8760/eureka/
+    register-with-eureka: true        # 因为该应用为服务提供者，是eureka的一个客户端，需要注册到注册中心
+    fetch-registry: true              # 是否需要从eureka上检索服务
 spring:
   application:
     name: producer

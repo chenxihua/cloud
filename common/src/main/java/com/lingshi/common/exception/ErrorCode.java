@@ -2,6 +2,7 @@ package com.lingshi.common.exception;
 
 /**
  * @ClassName: ErrorCode
+ * @Author: chenxihua
  * @Create By: chenxihua
  * @Date: 2019/9/11 10:05
  */
@@ -29,7 +30,11 @@ public enum ErrorCode {
         return msg;
     }
 
-    // 循环获取
+    /**
+     * 循环获取
+     * @param code
+     * @return
+     */
     public static String getResultCode(int code){
         for (ErrorCode errorCode : ErrorCode.values()){
             if (code==errorCode.getCode()){

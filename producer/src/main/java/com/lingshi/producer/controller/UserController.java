@@ -30,7 +30,7 @@ public class UserController {
 
 
     @GetMapping(value = "/user")
-    public Result getUser(@RequestParam Integer id){
+    public Result getUser(@RequestParam("id") Integer id){
         return ResultUtil.success("端口："+port, id);
     }
 

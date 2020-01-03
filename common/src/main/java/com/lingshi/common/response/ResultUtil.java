@@ -26,7 +26,6 @@ public class ResultUtil {
     }
 
     public static Result success(String msg){
-        logger.info("---> 成功调用: "+msg);
         Result result = new Result();
         result.setCode(0);
         result.setMsg(msg);
@@ -34,7 +33,6 @@ public class ResultUtil {
     }
 
     public static Result success(String msg, Object obj){
-        logger.info("---> 成功调用: "+obj);
         Result result = new Result();
         result.setCode(0);
         result.setMsg(msg);
@@ -43,7 +41,6 @@ public class ResultUtil {
     }
 
     public static Result error(ErrorCode errorCode){
-        logger.info("---> 调用失败: ");
         Result result = new Result();
         result.setCode(errorCode.getCode());
         result.setMsg(errorCode.getMsg());
