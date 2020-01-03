@@ -14,19 +14,18 @@
 
 
     <!--  logstash  -->
-    <appender name="stash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <destination>127.0.0.1:4560</destination>
-        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder">
-            <customFields>{"projectName":"cloud-producer"}</customFields>
-        </encoder>
-    </appender>
+    <!--<appender name="stash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">-->
+        <!--<destination>127.0.0.1:4560</destination>-->
+        <!--<encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder">-->
+            <!--<customFields>{"projectName":"cloud-producer"}</customFields>-->
+        <!--</encoder>-->
+    <!--</appender>-->
 
     <!-- Spring framework logger -->
     <logger name="org.springframework" level="debug" additivity="false"/>
 
     <root level="info">
         <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="stash"/>
     </root>
 
 

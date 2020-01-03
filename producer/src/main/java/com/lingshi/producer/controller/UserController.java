@@ -4,13 +4,13 @@ import com.lingshi.common.exception.ErrorCode;
 import com.lingshi.common.response.Result;
 import com.lingshi.common.response.ResultUtil;
 import com.lingshi.producer.bean.User;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @ClassName: UserController
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
  * @Date: 2019/9/4 14:47
  * @Version: 1.0
  */
-@Api("服务提供者 swagger")
 @RestController
 @RequestMapping(value = "/pro")
 public class UserController {
@@ -30,17 +29,12 @@ public class UserController {
     private final static Logger logger = LoggerFactory.getLogger(UserController.class);
 
 
-    @ApiOperation("获取用户id集合")
-    @ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "Integer")
     @GetMapping(value = "/user")
     public Result getUser(@RequestParam Integer id){
-
         return ResultUtil.success("端口："+port, id);
     }
 
 
-    @ApiOperation("传入一个用户实体")
-    @ApiImplicitParam(name = "user", value = "用户实体", required = true, dataType = "User")
     @PostMapping(value = "/save")
     public Result saveUser(@RequestBody User user){
         logger.warn("你想传入实体, 进行保存....");
@@ -48,11 +42,23 @@ public class UserController {
     }
 
 
-    @ApiOperation("获取错误的日志消息")
     @GetMapping(value = "/getError")
     public Result getError(){
         logger.warn("你正在调用 warn 日志");
         return ResultUtil.error(ErrorCode.UNKNOWN_ERROR);
+    }
+
+    @GetMapping(value = "/getById")
+    public Map<String, Object> getJsonBean(@RequestParam Integer id){
+        Map<String, Object> resultMap = new HashMap<>();
+        User user = new User();
+        user.setId(id);
+        user.setUsername("chenxihua:"+id);
+        user.setAge(10+id);
+        user.setEmail(id+"@qq.com");
+
+        resultMap.put("Message", ResultUtil.success("查询成功", user));
+        return resultMap;
     }
 
 }

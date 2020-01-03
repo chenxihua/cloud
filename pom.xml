@@ -28,8 +28,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
-
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -42,11 +44,6 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-            <!-- <version>2.1.1.RELEASE</version> -->
-        </dependency>
 
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -70,25 +67,6 @@
         </dependency>
 
 
-        <!--整合swagger -->
-        <!--<dependency>-->
-            <!--<groupId>io.springfox</groupId>-->
-            <!--<artifactId>springfox-swagger2</artifactId>-->
-            <!--<version>2.8.0</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>io.springfox</groupId>-->
-            <!--<artifactId>springfox-swagger-ui</artifactId>-->
-            <!--<version>2.8.0</version>-->
-        <!--</dependency>-->
-
-
-        <dependency>
-            <groupId>com.spring4all</groupId>
-            <artifactId>swagger-spring-boot-starter</artifactId>
-            <version>1.7.0.RELEASE</version>
-        </dependency>
-
 
     </dependencies>
 
@@ -111,6 +89,7 @@
         <module>eureka</module>
         <module>consume</module>
         <module>common</module>
+        <module>expense</module>
         <module>server-zuul</module>
     </modules>
 

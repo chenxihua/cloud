@@ -9,6 +9,7 @@
         <option value="$PROJECT_DIR$/consume/pom.xml" />
         <option value="$PROJECT_DIR$/common/pom.xml" />
         <option value="$PROJECT_DIR$/server-zuul/pom.xml" />
+        <option value="$PROJECT_DIR$/expense/pom.xml" />
       </list>
     </option>
   </component>
