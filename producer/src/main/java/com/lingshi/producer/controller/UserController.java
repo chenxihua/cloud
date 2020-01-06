@@ -4,12 +4,15 @@ import com.lingshi.common.exception.ErrorCode;
 import com.lingshi.common.response.Result;
 import com.lingshi.common.response.ResultUtil;
 import com.lingshi.producer.bean.User;
+import com.lingshi.producer.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,42 +26,46 @@ import java.util.Map;
 public class UserController {
 
 
-    @Value("${server.port}")
-    private String port;
+    @Autowired
+    UserService userService;
 
     private final static Logger logger = LoggerFactory.getLogger(UserController.class);
 
 
     @GetMapping(value = "/user")
     public Result getUser(@RequestParam("id") Integer id){
-        return ResultUtil.success("端口："+port, id);
+        User user = userService.searchById(id);
+        return ResultUtil.success("查到一个实体",user);
     }
 
 
     @PostMapping(value = "/save")
     public Result saveUser(@RequestBody User user){
-        logger.warn("你想传入实体, 进行保存....");
-        return ResultUtil.success("传入的实体： "+user);
+        logger.warn("你想传入实体, 进行保存....", user);
+        boolean saveUser = userService.saveUser(user);
+        return ResultUtil.success("保存一个实体结果： ", saveUser);
     }
 
 
-    @GetMapping(value = "/getError")
+    @GetMapping(value = "/getAll")
     public Result getError(){
-        logger.warn("你正在调用 warn 日志");
-        return ResultUtil.error(ErrorCode.UNKNOWN_ERROR);
+        List<User> users = userService.searchList();
+        return ResultUtil.success("查询到的用户列表结果", users);
     }
 
-    @GetMapping(value = "/getById")
-    public Map<String, Object> getJsonBean(@RequestParam Integer id){
-        Map<String, Object> resultMap = new HashMap<>();
-        User user = new User();
-        user.setId(id);
-        user.setUsername("chenxihua:"+id);
-        user.setAge(10+id);
-        user.setEmail(id+"@qq.com");
 
-        resultMap.put("Message", ResultUtil.success("查询成功", user));
-        return resultMap;
+    @GetMapping(value = "/getByUsername")
+    public Result getByUsername(@RequestParam String username){
+        User user = userService.searchByUsername(username);
+        return ResultUtil.success("根据用户名，查", user);
     }
+
+
+    @GetMapping(value = "/getByUserAndPass")
+    public Result getByUsernameAndPass(@RequestParam String username, @RequestParam String pass){
+        User user = userService.searchByUserAndPass(username, pass);
+        return ResultUtil.success("用户名和密码查", user);
+    }
+
 
 }

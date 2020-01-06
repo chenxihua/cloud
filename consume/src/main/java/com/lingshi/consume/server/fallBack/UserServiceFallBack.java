@@ -6,8 +6,6 @@ import com.lingshi.consume.bean.User;
 import com.lingshi.consume.server.UserServiceFeign;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @ClassName: UserServiceFallBack
@@ -29,10 +27,7 @@ public class UserServiceFallBack implements UserServiceFeign {
     }
 
     @Override
-    public Map<String, Object> getJsonBean(Integer id) {
-        Map<String, Object> result = new HashMap<>(2);
-        result.put("code", 407);
-        result.put("msg", "错啦，map");
-        return result;
+    public Result getJsonBean() {
+        return ResultUtil.error(404, "查询所有用户失败。。。");
     }
 }

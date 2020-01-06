@@ -3,25 +3,50 @@ server:
 eureka:
   instance:
     ip-address: 127.0.0.1
-    prefer-ip-address: true     #将自己的ip地址注册到Eureka服务中
-    instance-id: ${spring.application.name}###${server.port}    #指定实例id
+    prefer-ip-address: true     # 将自己的ip地址注册到Eureka服务中
+    instance-id: ${spring.application.name}###${server.port}    # 指定实例id
   client:
     service-url:
       defaultZone: http://chenxihua:123456@localhost:8760/eureka/
+    register-with-eureka: true
+    fetch-registry: true
 spring:
   application:
     name: zuul
-jwt:
-  header: Authorization     # http请求头所需要的字段
-  secret: mySecret          # jwt 密钥
-  expiration: 604800        # 7天 单位:秒
-  auth-path: auth           # 认证请求的路径
-  md5-key: randomKey        # md5 加密混淆key
-zuul:                # 第二种配置路由的方式   这种为produce 微服务就会被映射到 /produce-server/** 路径上。
+  redis:
+    host: 192.168.244.130
+    password: 123456
+    port: 6379
+    database: 0
+    timeout: 3000ms
+    jedis:
+      pool:
+        max-active: 1000
+        max-idle: 100
+    lettuce:
+      pool:
+        max-active: 100
+        max-wait: -1ms
+        max-idle: 8
+        min-idle: 0
+
+# 开启hystrix断路器
+feign:
+  hystrix:
+    enabled: true
+
+# 第二种配置路由的方式   这种为produce 微服务就会被映射到 /produce-server/** 路径上。
+
+zuul:
   routes:
     producer: /produce-server/**
     consume: /consum-server/**
-  ignored-services: '*'   # 忽略所有微服务，只留zuul代理所有微服务的路由
+# #
+#  ignored-services: '*'
+  # 忽略所有微服务，只留zuul代理所有微服务的路由
+
+# 在postman 输入的网址： localhost:9999/consum-server/cons/andById5?id=123 （类似这样的网址）
+
 #                      第一种配置路由的方式
 #zuul:
 #  ignored-services: '*'
@@ -32,4 +57,5 @@ zuul:                # 第二种配置路由的方式   这种为produce 微服�
 #    con-consume:
 #      path: /consum-server/**
 #      serviceid: consume
+
 
